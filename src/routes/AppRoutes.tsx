@@ -5,16 +5,16 @@ import LoginPage from "@/pages/Login.page";
 import RegisterPage from "@/pages/Register.page";
 
 export const router = createBrowserRouter([
+    // {
+    //     path: "/",
+    //     element: <Dashboard />
+    // },
     {
-        path: "/",
-        element: <Dashboard />
-    },
-    {
-        path: "/products",
+        path: "/login",
         element: <LoginPage />,
     },
     {
-        path: "/settings",
+        path: "/register",
         element: <RegisterPage />,
     },
 ])
