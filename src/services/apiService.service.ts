@@ -1,22 +1,27 @@
-import { apiClient } from "@/lib/axios";
-import type { ApiObject } from "@/lib/utils";
-import axios from "axios";
-
+import type { ApiObject } from "@/lib/utils"
+import axios from "axios"
+import { publicApiClient } from "@/lib/publicApi"
+import { privateApiClient } from "@/lib/privateApi"
 
 export const callApi = async (apiObject: ApiObject) => {
+    const { method, endpoint, body, params, signal, headers, requiresAuth = false } = apiObject
+
     try {
-        const response = await apiClient({
-            method: apiObject.method.toLowerCase(),
-            url: apiObject.endpoint,
-            data: apiObject.body,
-            params: apiObject.params,
-            signal: apiObject.signal, 
+        const instance = requiresAuth ? privateApiClient : publicApiClient
+
+        const response = await instance({
+            method,
+            url: endpoint,
+            data: body,
+            params,
+            signal,
+            headers,
         })
 
         return response.data
     } catch (error: unknown) {
         if (axios.isCancel(error)) throw error
-        
+
         if (axios.isAxiosError(error)) {
             throw {
                 success: false,
@@ -25,6 +30,6 @@ export const callApi = async (apiObject: ApiObject) => {
             }
         }
 
-    throw { success: false, status: 500, message: "Unexpected error" }          
+        throw { success: false, status: 500, message: "Unexpected error" }
     }
 }

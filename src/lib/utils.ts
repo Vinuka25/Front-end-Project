@@ -6,9 +6,12 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export interface ApiObject {
-  method: "GET" | "PSOT" | "PUT" | "PATCH" | "DELETE"
+  isWithoutPrefix?: boolean
+  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE"
   endpoint: string
   body?: unknown
   params?: Record<string, unknown>
   signal?: AbortSignal
+  requiresAuth?: boolean
+  headers?: Record<string, string>
 }
