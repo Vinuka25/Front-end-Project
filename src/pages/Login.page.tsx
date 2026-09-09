@@ -33,7 +33,7 @@ export default function LoginPage() {
         localStorage.setItem("user", JSON.stringify(response.data.user));
       }
 
-      navigate("/dashboard");
+      navigate("/");
     } catch (err: any) {
       setError(err.message || "Login failed. Please try again.");
     } finally {

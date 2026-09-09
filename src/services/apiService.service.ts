@@ -9,13 +9,19 @@ export const callApi = async (apiObject: ApiObject) => {
     try {
         const instance = requiresAuth ? privateApiClient : publicApiClient
 
+        const isFormData = typeof FormData !== "undefined" && body instanceof FormData
+        const finalHeaders: Record<string, string | undefined> = { ...headers }
+        if (isFormData) {
+            finalHeaders["Content-Type"] = undefined
+        }
+
         const response = await instance({
             method,
             url: endpoint,
             data: body,
             params,
             signal,
-            headers,
+            headers: finalHeaders,
         })
 
         return response.data

@@ -51,7 +51,7 @@ export default function RegisterPage() {
         localStorage.setItem("user", JSON.stringify(response.data.user));
       }
 
-      navigate("/dashboard");
+      navigate("/");
     } catch (err: any) {
       // Show detailed error message from backend
       let errorMessage = "Registration failed. Please try again.";
